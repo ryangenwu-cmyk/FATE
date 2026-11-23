@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>迦勒底資料庫 | FGO 粉絲站</title>
+<style>
+:root{
+  --bg:#f4efe3;--panel:#fffaf0;--ink:#1d2340;--muted:#5b6080;--gold:#9a6b00;
+  --nav:#1d2340;--nav-ink:#f4e4b0;--hover:#9a6b00;--sub:#2b3358;--line:#d8c9a0;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#0e1226;--panel:#171c38;--ink:#ece6d2;--muted:#9aa0c4;--gold:#e2b84a;
+  --nav:#080b1a;--nav-ink:#f4e4b0;--hover:#c8962a;--sub:#141a36;--line:#2c3460;color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#0e1226;--panel:#171c38;--ink:#ece6d2;--muted:#9aa0c4;--gold:#e2b84a;
+  --nav:#080b1a;--nav-ink:#f4e4b0;--hover:#c8962a;--sub:#141a36;--line:#2c3460;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Serif TC","PMingLiU",Georgia,serif;line-height:1.8}
+header{text-align:center;padding:28px 16px 16px}
+header h1{margin:0;font-size:clamp(26px,5vw,40px);letter-spacing:.2em;color:var(--gold)}
+header p{margin:4px 0 0;color:var(--muted);font-size:14px;letter-spacing:.3em}
+
+/* ===== 多層選單 ===== */
+#menu{max-width:960px;margin:0 auto;background:var(--nav);border-top:3px solid var(--gold);border-bottom:3px solid var(--gold)}
+#menu ul{list-style:none;margin:0;padding:0}
+#menu>ul{display:flex;flex-wrap:wrap;justify-content:center}
+#menu li{position:relative}
+#menu a{display:block;padding:0 18px;line-height:42px;color:var(--nav-ink);text-decoration:none;font-size:15px;white-space:nowrap;cursor:pointer}
+#menu li:hover>a,#menu li:focus-within>a{background:var(--hover);color:#fff}
+#menu li>ul{position:absolute;top:100%;left:0;min-width:170px;background:var(--sub);visibility:hidden;opacity:0;transition:opacity .15s;z-index:10;border:1px solid var(--line)}
+#menu li:hover>ul,#menu li:focus-within>ul{visibility:visible;opacity:1}
+#menu li li>ul{top:0;left:100%}
+#menu li>a.has::after{content:" ▾";font-size:11px}
+#menu li li>a.has::after{content:" ▸"}
+
+/* ===== 內容區 ===== */
+main{max-width:960px;margin:24px auto;padding:0 16px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:28px;min-height:300px}
+.panel h2{margin:0 0 4px;color:var(--gold);font-size:26px}
+.tag{display:inline-block;font-size:12px;border:1px solid var(--gold);color:var(--gold);padding:0 10px;border-radius:99px;margin-bottom:14px}
+.pic{display:block;max-width:100%;max-height:480px;height:auto;margin:14px 0;border-radius:6px;border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:18px}
+.card{border:1px solid var(--line);padding:12px 14px;border-radius:4px;cursor:pointer;background:var(--bg)}
+.card:hover{border-color:var(--gold)}
+.card b{color:var(--gold)}
+.sec{margin:26px 0 8px;color:var(--gold);font-size:20px;border-bottom:1px solid var(--line)}
+.sk{margin:14px 0}
+.skh{font-weight:bold;margin-bottom:4px}
+.skh small{color:var(--muted);font-weight:normal;margin-left:8px}
+.tw{overflow-x:auto}
+.tb{width:100%;border-collapse:collapse;font-size:13px;text-align:center}
+.tb th,.tb td{border:1px solid var(--line);padding:3px 8px;white-space:nowrap}
+.tb th{color:var(--gold);background:var(--bg)}
+.tb .lb{background:var(--bg);font-weight:bold}
+.tb .hi{color:#d0463a;font-weight:bold}
+.note{font-size:12px;color:var(--muted);margin:2px 0}
+.sb{margin:20px 0 6px}
+.sb input{width:100%;padding:10px 14px;font-size:16px;font-family:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--gold);border-radius:6px}
+.rs{list-style:none;margin:6px 0 0;padding:0}
+.rs li{padding:8px 12px;border:1px solid var(--line);border-top:0;cursor:pointer;background:var(--bg)}
+.rs li:first-child{border-top:1px solid var(--line)}
+.rs li:hover{border-color:var(--gold);color:var(--gold)}
+.rs small{color:var(--muted);margin-left:8px}
+.rs .none{cursor:default;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px 16px 32px}
+@media (max-width:640px){
+  #menu a{padding:0 12px;line-height:38px}
+  #menu li li>ul{left:0;top:100%;position:static;border:0;padding-left:12px}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>迦勒底資料庫</h1>
+  <p>FATE / GRAND ORDER FAN ARCHIVE</p>
+</header>
+
+<nav id="menu">
+<ul>
+  <li><a data-k="home">首頁</a></li>
+  <li><a class="has" tabindex="0">從者</a>
+    <ul>
+      <li><a class="has" tabindex="0">劍士 Saber</a>
+        <ul>
+          <li><a data-k="artoria">阿爾托莉雅</a></li>
+          <li><a data-k="nero">尼祿</a></li>
+        </ul>
+      </li>
+      <li><a class="has" tabindex="0">弓兵 Archer</a>
+        <ul>
+          <li><a data-k="napoleon">拿破崙</a></li>
+          <li><a data-k="gil">吉爾伽美什</a></li>
+        </ul>
+      </li>
+      <li><a class="has" tabindex="0">槍兵 Lancer</a>
+        <ul>
+          <li><a data-k="cu">庫·丘林</a></li>
+          <li><a data-k="scathach">斯卡薩哈</a></li>
+        </ul>
+      </li>
+      <li><a class="has" tabindex="0">騎兵 Rider</a>
+        <ul>
+          <li><a data-k="medusa">美杜莎</a></li>
+        </ul>
+      </li>
+      <li><a class="has" tabindex="0">魔術師 Caster</a>
+        <ul>
+          <li><a data-k="sanzang">三藏法師</a></li>
+        </ul>
+      </li>
+      <li><a class="has" tabindex="0">暗殺者 Assassin</a>
+        <ul>
+          <li><a data-k="semiramis">賽彌拉彌斯</a></li>
+        </ul>
+      </li>
+      <li><a class="has" tabindex="0">狂戰士 Berserker</a>
+        <ul>
+          <li><a data-k="kintoki">坂田金時</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a class="has" tabindex="0">遊戲系統</a>
+    <ul>
+      <li><a data-k="cards">指令卡</a></li>
+      <li><a data-k="np">寶具</a></li>
+      <li><a data-k="bond">羈絆</a></li>
+    </ul>
+  </li>
+  <li><a class="has" tabindex="0">活動資訊</a>
+    <ul>
+      <li><a data-k="event">活動日程</a></li>
+      <li><a data-k="summon">概念禮裝</a></li>
+    </ul>
+  </li>
+  <li><a data-k="about">關於本站</a></li>
+</ul>
+</nav>
+
+<main>
+  <section class="panel" id="view" aria-live="polite"></section>
+</main>
+<footer>本站為非官方粉絲製作，Fate/Grand Order 之相關權利屬於其權利人。</footer>
+
+<script>
+/* 內容資料
+   t:標題  tag:職階標籤  p:簡介
+   img:"images/檔名.png"   → 圖片（可省略）
+   voice:"audio/檔名.mp3"  → 語音（可省略）*/
+var L=[20,21,22,23,24,25,26,27,28,30];
+function pc(a){return a.map(function(x){return x+"%"})}
+var D={
+home:{t:"歡迎來到迦勒底",tag:"首頁",img:"images/NMS57W2awy6b_h5Ful7IuVg4F8g3ZKX6MaOOnDGjjpw.jfif",p:"這是一個 Fate/Grand Order 粉絲資料站。從上方選單選擇職階、從者或遊戲系統，即可查看簡介。"},
+
+artoria:{t:"阿爾托莉雅·潘德拉貢",tag:"Saber",alias:"阿爾托利亞,阿爾托莉亞,阿爾特莉雅,Artoria,Arthur,亞瑟王",img:"images/阿尔托莉雅-卡面4.png",voice:"audio/SV2_0_宝具3.mp3",np:{n:"誓約勝利之劍",en:"Excalibur",rank:"A++",type:"對城寶具",card:"Buster",fx:[["對敵方全體發動強大的攻擊〈寶具升級效果提升〉",["400%","500%","550%","575%","600%"]],["自身的NP再充能〈Over Charge 時效果提升〉",["20%","27.5%","35%","42.5%","50%"]]]},
+sk:[
+{n:"理想鄉的騎士 EX",ct:"7→6→5",fx:[["己方全體的攻擊力提升（3回合）",pc(L)],["己方全體〈圓桌騎士〉的攻擊力提升（3回合）",pc([10,11,12,13,14,15,16,17,18,20])],["自身的 Extra Attack 指令卡性能大提升（3回合）",pc([100,110,120,130,140,150,160,170,180,200])],["附與「Buster 攻擊時，自身NP增加」的狀態（3回合）",["10%"]]],note:"單次攻擊時，效果會依攻擊對象的數量重複生效。"},
+{n:"龍之爐心 B",ct:"7→6→5",fx:[["自身的 Buster 指令卡性能提升（1回合）",pc([30,32,34,36,38,40,42,44,46,50])],["寶具威力提升（1回合）",pc(L)],["所有指令卡變為 Buster 類型（1回合）",["—"]]]},
+{n:"閃耀之路 EX",ct:"7→6→5",fx:[["自身的NP增加",pc(L)],["獲得大量暴擊星",[5,6,7,8,9,10,11,12,13,15]]]}
+],
+p:"畫師：武內崇<br>聲優：川澄綾子<br>稀有度：5星<br>職階：Saber<br>屬性：秩序・善<br>副屬性：地<br>性別：女性<br><br>以亞瑟王傳說為原型的劍士。代表寶具為聖劍「誓約勝利之劍」（Excalibur）。"},
+nero:{t:"尼祿·克勞狄烏斯",tag:"Saber",p:"以羅馬皇帝尼祿為原型的劍士，自稱「薔薇皇帝」，個性華麗而自信。"},
+
+napoleon:{t:"拿破崙·波拿巴",tag:"Archer",p:"在這裡寫簡介。"},
+gil:{t:"吉爾伽美什",tag:"Archer",p:"以美索不達米亞英雄王為原型，掌握大量寶具，是系列中的代表性人物。"},
+
+cu:{t:"庫·丘林",tag:"Lancer",p:"凱爾特神話的光之子，以魔槍「刺穿死棘之槍」（Gáe Bolg）著名。"},
+scathach:{t:"斯卡薩哈",tag:"Lancer",p:"在這裡寫簡介。"},
+
+medusa:{t:"美杜莎",tag:"Rider",p:"希臘神話中的蛇髮女妖，擁有能石化對手的魔眼，戰鬥時會騎乘天馬。"},
+sanzang:{t:"三藏法師",tag:"Caster",p:"以玄奘三藏為原型的魔術師，與《西遊記》取經的故事有關。"},
+semiramis:{t:"賽彌拉彌斯",tag:"Assassin",p:"以傳說中的亞述女王為原型的暗殺者，與空中花園的傳說相關。"},
+kintoki:{t:"坂田金時",tag:"Berserker",p:"以平安時代武士坂田金時（金太郎）為原型的狂戰士，與源賴光麾下的四天王有關。"},
+
+cards:{t:"指令卡",tag:"遊戲系統",p:"戰鬥以 Buster、Arts、Quick 三種指令卡構成。排出相同顏色或連鎖組合可獲得額外效果。"},
+np:{t:"寶具",tag:"遊戲系統",p:"從者的必殺技。累積 NP 計量表後即可發動，各寶具效果依從者而異。"},
+bond:{t:"羈絆",tag:"遊戲系統",p:"與從者共同戰鬥累積羈絆等級，可解鎖更多劇情與獎勵。"},
+event:{t:"活動日程",tag:"活動資訊",p:"本頁可放置活動名稱與期間。實際日程請以官方公告為準。"},
+summon:{t:"概念禮裝",tag:"活動資訊",p:"像武器一樣的東西，可以裝備給各個從者"},
+about:{t:"關於本站",tag:"站務",p:"本站為練習作業用的非官方粉絲網站，資料不足或有雷同的部分請多多包涵。"}
+};
+
+function strip(h){return String(h||"").replace(/<[^>]*>/g,"")}
+function norm(x){return strip(x).toLowerCase().replace(/\s+/g,"")}
+function find(q){
+  q=norm(q);if(!q)return [];
+  var hit=[],rest=[];
+  Object.keys(D).forEach(function(k){
+    if(k==="home")return;
+    var d=D[k],name=norm(d.t+","+(d.alias||"")+","+k+","+d.tag);
+    if(name.indexOf(q)>=0){hit.push(k)}
+    else if(norm(d.p).indexOf(q)>=0){rest.push(k)}
+  });
+  return hit.concat(rest);
+}
+
+var view=document.getElementById("view");
+
+function show(k){
+  var d=D[k]||D.home;
+  view.innerHTML="<span class='tag'></span><h2></h2><p></p>";
+  view.querySelector(".tag").textContent=d.tag;
+  view.querySelector("h2").textContent=d.t;
+  view.querySelector("p").innerHTML=d.p;
+
+  /* 圖片：有 img 欄位才顯示，載入失敗就自動隱藏 */
+  if(d.img){
+    var im=document.createElement("img");
+    im.className="pic";
+    im.alt=d.t;
+    im.onerror=function(){im.style.display="none"};
+    im.src=d.img;
+    view.insertBefore(im,view.querySelector("p"));
+  }
+
+  /* 語音：有 voice 欄位才顯示播放器 */
+  if(d.voice){
+    var au=document.createElement("audio");
+    au.controls=true;
+    au.preload="none";
+    au.src=d.voice;
+    au.style.width="100%";
+    au.style.margin="4px 0 12px";
+    view.insertBefore(au,view.querySelector("p"));
+  }
+
+  function mk(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+  function tbl(heads,fx,hi){
+    var w=mk("div","tw"),t=mk("table","tb"),r=mk("tr");
+    heads.forEach(function(h){r.appendChild(mk("th",null,h))});
+    t.appendChild(r);
+    fx.forEach(function(f){
+      r=mk("tr");var c=mk("td","lb",f[0]);c.colSpan=heads.length;r.appendChild(c);t.appendChild(r);
+      r=mk("tr");
+      if(f[1].length===1){c=mk("td",null,f[1][0]);c.colSpan=heads.length;r.appendChild(c)}
+      else f[1].forEach(function(v,i){r.appendChild(mk("td",hi.indexOf(i)>=0?"hi":null,v))});
+      t.appendChild(r);
+    });
+    w.appendChild(t);return w;
+  }
+  if(d.np){
+    var n=d.np;
+    view.appendChild(mk("h3","sec","寶具"));
+    var b=mk("div","sk");
+    b.appendChild(mk("div","skh",n.n+"（"+n.en+"）"));
+    b.lastChild.appendChild(mk("small",null,n.card+"｜"+n.rank+"｜"+n.type));
+    b.appendChild(tbl(["寶1","寶2","寶3","寶4","寶5"],n.fx,[]));
+    view.appendChild(b);
+  }
+  if(d.sk){
+    view.appendChild(mk("h3","sec","技能"));
+    var H=["Lv1","Lv2","Lv3","Lv4","Lv5","Lv6","Lv7","Lv8","Lv9","Lv10"];
+    d.sk.forEach(function(k2,i){
+      var b=mk("div","sk");
+      b.appendChild(mk("div","skh","技能"+(i+1)+"：" +k2.n));
+      b.lastChild.appendChild(mk("small",null,"充能時間 "+k2.ct));
+      b.appendChild(tbl(H,k2.fx,[5,9]));
+      if(k2.note)b.appendChild(mk("p","note",k2.note));
+      view.appendChild(b);
+    });
+  }
+
+  if(k==="home"){
+    var sb=mk("div","sb"),inp=document.createElement("input"),rs=mk("ul","rs");
+    inp.type="search";inp.placeholder="搜尋從者或關鍵字，例如：阿爾托莉雅、Saber、寶具";
+    function draw(){
+      rs.innerHTML="";
+      var q=inp.value.trim();if(!q)return;
+      var r=find(q);
+      if(!r.length){rs.appendChild(mk("li","none","找不到「"+q+"」"));return}
+      r.slice(0,8).forEach(function(key){
+        var li=mk("li",null,D[key].t);li.appendChild(mk("small",null,D[key].tag));
+        li.onclick=function(){show(key)};rs.appendChild(li);
+      });
+    }
+    inp.addEventListener("input",draw);
+    inp.addEventListener("keydown",function(e){
+      if(e.key==="Enter"){var r=find(inp.value);if(r.length)show(r[0]);else draw()}
+    });
+    sb.appendChild(inp);sb.appendChild(rs);view.appendChild(sb);
+    var g=document.createElement("div");g.className="grid";
+    [["artoria","劍士・阿爾托莉雅"],["napoleon","弓兵・拿破崙"],["scathach","槍兵・斯卡薩哈"],["cards","指令卡系統"]].forEach(function(x){
+      var c=document.createElement("div");c.className="card";
+      c.innerHTML="<b></b>";c.firstChild.textContent=x[1];
+      c.onclick=function(){show(x[0])};
+      g.appendChild(c);
+    });
+    view.appendChild(g);
+  }
+  try{location.hash=k}catch(e){}
+}
+
+document.querySelectorAll("#menu a[data-k]").forEach(function(a){
+  a.addEventListener("click",function(){
+    show(a.dataset.k);
+    if(document.activeElement)document.activeElement.blur();
+  });
+});
+
+var h=(location.hash||"").slice(1);
+show(D[h]?h:"home");
+</script>
+</body>
+</html>
